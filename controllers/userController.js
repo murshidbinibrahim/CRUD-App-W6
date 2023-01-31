@@ -1,6 +1,21 @@
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
-const loadRegister = async (req, res) => {
+
+const securePassword = async(password) =>{
+    try {
+
+        const passwordHash = await bcrypt.hash(password, 10);
+        return passwordHash;
+        
+    } catch (error) {
+
+        console.log(error.message);
+
+    }
+}
+
+const loadRegister = async(req, res) => {
     try {
 
         res.render('registration');
@@ -15,12 +30,14 @@ const loadRegister = async (req, res) => {
 const insertUser = async(req , res) => {
     try {
 
+        const spassword = await securePassword(req.body.pwd);
+
         const user = new User({
 
             name : req.body.name,
             email : req.body.email,
             mobile : req.body.mno,
-            password : req.body.pwd,
+            password : spassword,
             is_admin : 0
 
         });

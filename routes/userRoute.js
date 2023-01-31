@@ -11,6 +11,7 @@ user_route.use(bodyParser.urlencoded({extended : true}))
 const userController = require("../controllers/userController");
 
 user_route.get('/register', userController.loadRegister);
+
 user_route.post('/register', userController.insertUser);
 
 module.exports = user_route;
