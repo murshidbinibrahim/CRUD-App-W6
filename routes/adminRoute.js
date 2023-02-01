@@ -24,7 +24,9 @@ admin_route.post('/', adminController.verifyLogin);
 
 admin_route.get('/home', auth.isLogin, adminController.loadDashboard);
 
-admin_route.get('/logout', auth.isLogout, adminController.logout)
+admin_route.get('/logout', auth.isLogout, adminController.logout);
+
+admin_route.get('/dashboard', auth.isLogin, adminController.adminDashboard);
 
 admin_route.get('*', function (req,res) {
 

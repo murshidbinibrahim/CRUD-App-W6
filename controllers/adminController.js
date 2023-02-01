@@ -23,7 +23,7 @@ const verifyLogin = async (req,res) =>{
 
             if(passwordMatch){
                 if(userData.is_admin === 0){
-                    res.render('login',{message : "Email and password is incorrect"})
+                    res.render('login',{message : "Email and password is incorrect, not an admin"});
                 }
                 else{
                     req.session.user_id = userData._id;
@@ -31,11 +31,11 @@ const verifyLogin = async (req,res) =>{
                 }
             }
             else{
-
+                res.render('login',{message : "Email or password is incorrect"});
             }
             
         } else {
-            res.render('login', {message : "Email and password is incorrect"});
+            res.render('login', {message : "Please provide your Email and password"});
         }
         
     } catch (error) {
@@ -45,7 +45,9 @@ const verifyLogin = async (req,res) =>{
 
 const loadDashboard = async (req,res) =>{
     try {
-        res.render('home');
+
+        const userData = await User.findById({_id : req.session.user_id});
+        res.render('home', {admin : userData});
         
     } catch (error) {
         console.log(error.message);
@@ -63,9 +65,22 @@ const logout = async (req,res) =>{
     }
 }
 
+const adminDashboard = async (req,res) => {
+
+    try {
+        const userData = await User.find({is_admin:0});
+        res.render('dashboard',{users : userData});
+        
+    } catch (error) {
+
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     loadLogin,
     verifyLogin,
     loadDashboard,
-    logout
+    logout,
+    adminDashboard
 }

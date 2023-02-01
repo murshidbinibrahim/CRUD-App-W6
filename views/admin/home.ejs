@@ -1,16 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Home</title>
-</head>
-<body>
+  </head>
 
-    <h1>Welcome Admin</h1>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+    crossorigin="anonymous"
+  />
 
-    <a href="/admin/logout">Logout</a>
-    
-</body>
+  <body class="container">
+    <section class="vh-100" style="background-color: white">
+      <div class="container py-5 h-100">
+        <h1>Welcome, <%= admin.name %></h1>
+        <br>
+
+        <a href="/admin/dashboard" class="fs-4">Dashboard</a>
+        <br><br>
+        <a href="/admin/logout" class="fs-4">Logout</a>
+        
+        <!-- Service Boxes -->
+        <section id="services" class="p-5">
+          <h2 class="text-center mt-5">This is Admin Home page</h2>
+          <h2 class="text-center mt-4">Have a nice day</h2>
+        </section>
+
+        <!-- Contact -->
+        <section class="p-5" id="profile">
+          <div class="container text-center">
+            <div class="row g-4">
+              <div class="col-md">
+                <h2 class="text-center mb-4">Admin Profile</h2>
+                <ul class="list-group list-group-flush lead">
+                  <li class="list-group-item">
+                    <span class="fw-bold">Username:</span> <%= admin.name%>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="fw-bold">Mobile:</span> <%= admin.mobile %>
+                  </li>
+                  <li class="list-group-item">
+                    <span class="fw-bold">Email: </span> <%= admin.email %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
