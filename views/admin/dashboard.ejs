@@ -32,6 +32,8 @@
                     </th>
                     <th class="th-sm">Mobile
                     </th>
+                    <th class="th-sm">Action
+                    </th>
                 </tr>
                 </thead>
 
@@ -47,6 +49,7 @@
                                 <td><%= users[i].name %></td>
                                 <td><%= users[i].email %></td>
                                 <td><%= users[i].mobile %></td>
+                                <td><a href="/admin/edit-user?id=<%= users[i]._id %>">Edit</a></td>
                             </tr>
                         <%
                         }
