@@ -1,7 +1,5 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
-const randomstring = require('randomstring');
-const config = require('../config/config');
 
 const securePassword = async(password)=>{
     try {
@@ -103,14 +101,16 @@ const newUserLoad = async (req,res) =>{
 }
 
 const addUser = async(req,res) =>{
+
+
     try {
 
         const name = req.body.name;
         const email =  req.body.email;
         const mno = req.body.mno;
-        const password = randomstring.generate(8);
+        // const password = randomstring.generate(8);
 
-        const spassword = await securePassword(password);
+        const spassword = await securePassword(req.body.pwd);
 
         const user = new User({
             name : name,
@@ -169,6 +169,20 @@ const updateUser = async(req,res) =>{
     }
 }
 
+//delete users
+
+const deleteUser = async (req,res) => {
+    try {
+        
+        const id = req.query.id;
+        await User.deleteOne({ _id : id});
+        res.redirect('/admin/dashboard')
+
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     loadLogin,
     verifyLogin,
@@ -178,5 +192,7 @@ module.exports = {
     newUserLoad,
     addUser,
     editUserLoad,
-    updateUser
+    updateUser,
+    deleteUser
+
 }
