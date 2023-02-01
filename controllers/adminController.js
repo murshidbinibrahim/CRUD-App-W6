@@ -1,5 +1,18 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const randomstring = require('randomstring');
+const config = require('../config/config');
+
+const securePassword = async(password)=>{
+    try {
+
+        const passwordMatch = await bcrypt.hash(password, 10);
+        return passwordMatch;
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
 
 const loadLogin = async (req,res) =>{
     try {
@@ -77,10 +90,58 @@ const adminDashboard = async (req,res) => {
     }
 }
 
+// Add new user (Admin)
+
+const newUserLoad = async (req,res) =>{
+    try {
+
+        res.render('new-user');
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+const addUser = async(req,res) =>{
+    try {
+
+        const name = req.body.name;
+        const email =  req.body.email;
+        const mno = req.body.mno;
+        const password = randomstring.generate(8);
+
+        const spassword = await securePassword(password);
+
+        const user = new User({
+            name : name,
+            email : email,
+            mobile : mno,
+            password : spassword,
+            is_admin : 0
+        });
+
+        const userData = await user.save();
+
+        if (userData) {
+
+            res.redirect('/admin/dashboard');
+            
+        } else {
+
+            res.render('new-user',{message : "Something wrong"});
+        }
+        
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
 module.exports = {
     loadLogin,
     verifyLogin,
     loadDashboard,
     logout,
-    adminDashboard
+    adminDashboard,
+    newUserLoad,
+    addUser
 }
